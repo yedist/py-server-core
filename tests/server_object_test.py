@@ -10,7 +10,6 @@ def initial():
     logs_queue, log_handler = test_log_queue()
 
     root = logging.getLogger()
-    root.handlers.clear()
     root.setLevel(logging.DEBUG)
     root.addHandler(log_handler)
 
