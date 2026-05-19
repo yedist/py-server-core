@@ -24,7 +24,8 @@ class Connection:
         ...
 
     async def send(self, data: bytes):
-        ...
+        self._writer.write(data)
+        await self._writer.drain()
 
     async def close(self):
         try:
