@@ -1,0 +1,2 @@
+class ReadError(ConnectionError):
+    pass
