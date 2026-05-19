@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from typing import Any
+from typing import Any, Self, Optional
 
 from .errors import ConnectionCloseError
 from .reader import Reader
@@ -14,6 +14,11 @@ class Connection:
     def __init__(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
         self._reader = Reader(reader)
         self._writer = writer
+
+    @classmethod
+    async def connect(cls, host: str, port: int, timeout: Optional[float] = None) -> Self:  # need try and need test
+        reader, writer = await asyncio.wait_for(asyncio.open_connection(host, port), timeout)
+        return cls(reader, writer)
 
     async def get(self) -> Any:
         ...
