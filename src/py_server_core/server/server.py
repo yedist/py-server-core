@@ -4,6 +4,7 @@ import logging
 from .errors import ServerStartError, ServerCloseError
 from ..connection import Connection
 
+
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
