@@ -1,0 +1,2 @@
+class ConnectionCloseError(ConnectionError):
+    pass
