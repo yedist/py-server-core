@@ -1,0 +1,2 @@
+class WriterError(ConnectionError):
+    pass
