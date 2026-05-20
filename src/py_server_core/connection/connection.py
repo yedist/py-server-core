@@ -4,16 +4,16 @@ from typing import Any, Self, Optional
 
 from .errors import ConnectionCloseError
 from .reader import Reader
-
+from .writer import Writer
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
 
 class Connection:
-    def __init__(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
-        self._reader = Reader(reader)
-        self._writer = writer
+    def __init__(self, input_stream: asyncio.StreamReader, output_stream: asyncio.StreamWriter):
+        self._reader = Reader(input_stream)
+        self._writer = Writer(output_stream)
 
     @classmethod
     async def connect(cls, host: str, port: int, timeout: Optional[float] = None) -> Self:  # need try and need test
@@ -24,8 +24,7 @@ class Connection:
         ...
 
     async def send(self, data: bytes):
-        self._writer.write(data)
-        await self._writer.drain()
+        await self._writer.write(data)
 
     async def close(self):
         try:
