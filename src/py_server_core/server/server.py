@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from .errors import ServerStartError, ServerCloseError
+from ._socket_functions import get_addresses
 
 
 logger = logging.getLogger(__name__)
@@ -31,10 +32,7 @@ class Server:
             logger.exception("Server up error")
             raise ServerStartError(exc) from exc
         else:
-            addresses = [
-                (sock.family, sock.getsockname())
-                for sock in (self._server.sockets or [])
-            ]
+            addresses = get_addresses(self._server.sockets)
             logger.info("Server up", extra={"addresses": addresses})
 
     async def close(self):
