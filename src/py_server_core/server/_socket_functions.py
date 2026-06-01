@@ -1,8 +1,8 @@
-from typing import Iterable, Optional
+from typing import Iterable
 import socket
 
 
-def get_addresses(sockets: Optional[Iterable[socket.socket]]):
+def get_addresses(sockets: Iterable[socket.socket] | None) -> list[tuple[socket.AddressFamily, object]]:
     sockets = sockets or []
 
     return [

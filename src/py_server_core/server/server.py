@@ -1,3 +1,4 @@
+from typing import Final
 import asyncio
 import logging
 
@@ -11,8 +12,8 @@ logger.addHandler(logging.NullHandler())
 
 class Server:
     def __init__(self, host: str, port: int):
-        self._host = host
-        self._port = port
+        self.host: Final = host
+        self.port: Final = port
         self._server: asyncio.Server | None = None
 
     @property
@@ -27,7 +28,7 @@ class Server:
             return
 
         try:
-            self._server = await asyncio.start_server(self._on_connection, self._host, self._port)
+            self._server = await asyncio.start_server(self._on_connection, self.host, self.port)
         except Exception as exc:
             logger.exception("Server up error")
             raise ServerStartError(exc) from exc
